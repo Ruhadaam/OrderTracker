@@ -1,23 +1,20 @@
 import React from "react";
 import { useCallback } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { View, Text, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { LinearGradient } from "expo-linear-gradient";
 import Customer from "./Components/customer";
-import Fab from "./Components/Fab";
+import Fab from "./Components/fab";
+import { addCustomer } from "./firebase";
 
+addCustomer("user123", "Test Name", "test@example.com", "https://example.com/profile.jpg");
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+
+
   const [fontsLoaded, fontError] = useFonts({
     "Benny-Blanco": require("./assets/fonts/BENNB___.ttf"),
   });
@@ -31,7 +28,6 @@ export default function App() {
     return null;
   }
 
-
   return (
     <LinearGradient
       style={{ flex: 1 }}
@@ -39,11 +35,10 @@ export default function App() {
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
     >
-      <ScrollView>
-      <Customer/>
-      <Fab/>
+      <ScrollView onLayout={onLayoutRootView}>
+        <Customer />
       </ScrollView>
-  
+      <Fab />
     </LinearGradient>
   );
 }
