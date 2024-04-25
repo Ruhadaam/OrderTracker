@@ -1,30 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
- 
 } from "react-native";
 
-
-import { useSelector,useDispatch } from "react-redux";
-import { setEmail,setPassword } from "../redux/authSlice";
-
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../redux/authSlice";
 
 const LoginPage = () => {
-  //authSlice içerisindeki verilerin okunması
-  const {email,password} = useSelector((state)=> state.login);
-  console.log(email);
-  console.log(password);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const user = useSelector((state) => {
+    state.user;
+  });
 
-
-  //authSlice içerisindeki reducer yapılarını kullanma veya veri gönderme
-  const dispatch = useDispatch()
-
-
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -35,7 +29,7 @@ const LoginPage = () => {
           style={styles.inputText}
           placeholder="E-posta"
           placeholderTextColor="#003f5c"
-          onChangeText={(text) =>  dispatch(setEmail(text))}
+          onChangeText={(text) => setEmail(text)}
         />
       </View>
       <View style={styles.inputView}>
@@ -44,10 +38,10 @@ const LoginPage = () => {
           style={styles.inputText}
           placeholder="Şifre"
           placeholderTextColor="#003f5c"
-          onChangeText={(password) => dispatch(setPassword(password))}
+          onChangeText={(password) => setPassword(password)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn} >
+      <TouchableOpacity style={styles.loginBtn} onPress={()=>{dispatch(login({email,password}))}}>
         <Text style={styles.loginText}>Giriş</Text>
       </TouchableOpacity>
     </View>

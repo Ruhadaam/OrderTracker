@@ -1,15 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
-
-//configureStore ile state store oluşturulur.
-//creatSlice ile state oluşturulur.
-//useSelector ile state'ten veri çekilir.
-//useDispatch ile state'e veri gönderilir
-
+import { thunk } from "redux-thunk";
 
 export const store = configureStore({
 reducer: {
     login :authReducer 
-}
+},
+middleware:(getDefaultMiddleware) => getDefaultMiddleware({serializableCheck:false})
 
 })
