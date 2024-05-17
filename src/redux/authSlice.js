@@ -30,7 +30,7 @@ export const login = createAsyncThunk(
 const initialState = {
   email: null,
   password: null,
-  isAuth: false,
+  isAuth: true,
   token: null,
   user: null,
   error: null,

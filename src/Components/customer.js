@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, { useCallback } from "react";
 import {
   Text,
   StyleSheet,
@@ -12,7 +12,7 @@ import Fab from "./fab";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
-
+import Toast from 'react-native-toast-message';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -21,44 +21,61 @@ const Customer = () => {
     {
       id: 1,
       name: "Ramle Yatçı",
-      message: "24.05.2024",
-      kalan: "100",
+      deliveryDate: "24.05.2024",
+      price: 600,
+      paid: 350,
+      remainder: 600 - 350,
+      daysLeft: 3,
     },
     {
       id: 2,
       name: "Ayşe Demir",
-      message: "28.05.2024",
-      kalan: "250",
+      deliveryDate: "28.05.2024",
+      price: 500,
+      paid: 250,
+      remainder: 500 - 250,
+      daysLeft: 5,
     },
     {
       id: 3,
       name: "Ayşe Demir",
-      message: "28.05.2024",
-      kalan: "250",
+      deliveryDate: "24.05.2024",
+      price: 600,
+      paid: 350,
+      remainder: 600 - 350,
+      daysLeft: 4,
     },
     {
       id: 4,
       name: "Ayşe Demir",
-      message: "28.05.2024",
-      kalan: "250",
+      deliveryDate: "24.05.2024",
+      price: 600,
+      paid: 350,
+      remainder: 600 - 350,
     },
     {
       id: 5,
       name: "Ayşe Demir",
-      message: "28.05.2024",
-      kalan: "250",
+      deliveryDate: "24.05.2024",
+      price: 600,
+      paid: 350,
+      remainder: 600 - 350,
     },
     {
       id: 6,
       name: "Ayşe Demir",
-      message: "28.05.2024",
-      kalan: "250",
+      deliveryDate: "24.05.2024",
+      price: 600,
+      paid: 350,
+      remainder: 600 - 350,
     },
     {
       id: 7,
       name: "Ayşe Demir",
-      message: "28.05.2024",
-      kalan: "250",
+      deliveryDate: "24.05.2024",
+      price: 600,
+      paid: 350,
+      remainder: 600 - 350,
     },
   ];
 
@@ -68,10 +85,12 @@ const Customer = () => {
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
+      console.log("yazı tipi yüklendi.");
     }
   }, [fontsLoaded, fontError]);
 
   if (!fontsLoaded && !fontError) {
+    console.log("yazı tipi yüklenmedi.");
     return null;
   }
 
@@ -94,50 +113,69 @@ const Customer = () => {
             <View
               style={styles.box}
               key={item.id}
-              className="flex-row px-8 items-center border-b border-gray-300 py-8 rounded-xl  bg-white m-5"
-            >
-              <View className="flex-1 justify-between">
-                <View className="flex-row justify-between items-center ">
+              //kutular
+
+              className="flex-row px-8 items-center border-b border-gray-300 py-8 rounded-xl  bg-white m-5" 
+              >
+              <View className="flex-1 flex-row justify-between">
+
+
+
+                <View className="flex-col justify-between items-center ">
                   <Text className="font-bold text-lg">{item.name}</Text>
                   <View className="flex-row space-x-3">
-                    <TouchableOpacity>
+                    <Text className="">
+                      <Text className="font-extrabold">Kalan: </Text>
+                      {item.remainder}TL
+                    </Text>
+                  </View>
+                </View>
+
+
+
+                <View className="flex-col justify-between items-center ">
+                  <View className=" items-center space-x-3">
+                    <Text className="font-bold text-4xl text-red-500">
+                      {item.daysLeft}
+                    </Text>
+                    <Text className="font-extrabold pr-2 pt-2">Gün kaldı</Text>
+                  </View>
+                </View>
+
+
+
+                <View className=" flex justify-between items-center  ">
+                  <View className=" flex-row justify-between m-2 items-center ">
+                    <TouchableOpacity className="mr-2">
                       <FontAwesome
                         name="trash"
                         color="red"
                         size={24}
-                        className="mr-2 text-gray-400"
+                        className=" text-gray-400"
                       />
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                      <FontAwesome5
-                        color="orange"
-                        name="edit"
-                        size={24}
-                        className=""
-                      />
+                    <TouchableOpacity className="ml-2">
+                      <FontAwesome5 color="orange" name="edit" size={24} />
                     </TouchableOpacity>
                   </View>
-                </View>
-                <View className=" flex-row justify-between items-center pt-3">
-                  <Text className="">
-                    {" "}
-                    <Text className="font-extrabold">Kalan: </Text>
-                    {item.kalan}TL
-                  </Text>
 
-                  <Text className="text-gray-600">
+                  <Text className="text-gray-600 ">
                     <Text className="font-extrabold">Teslim: </Text>
-                    {item.message}
+                    {item.deliveryDate}
                   </Text>
                 </View>
+
+
+
               </View>
             </View>
           ))}
-          
         </View>
       </ScrollView>
       <Fab />
+      <Toast />
     </LinearGradient>
+    
   );
 };
 
