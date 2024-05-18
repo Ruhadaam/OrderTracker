@@ -10,7 +10,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebaseconfig";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal, { ReactNativeModalDateTimePickerProps } from 'react-native-modal-datetime-picker';
 import { format, differenceInDays } from "date-fns";
 import Toast from "react-native-toast-message";
 
@@ -42,9 +42,11 @@ const Fab = () => {
     return differenceInDays(delivery, currentDate);
   };
 
+  //SEND DATA
   const sendData = async () => {
     const remainder = price - paid;
     const daysLeft = calculateDaysLeft(deliveryDate);
+    const currentDate = new Date();
     try {
       const docRef = await addDoc(collection(db, "Orders"), {
         name,
@@ -53,6 +55,7 @@ const Fab = () => {
         paid: parseInt(paid),
         remainder,
         daysLeft,
+        currentDate
       });
       console.log("Document written with ID: ", docRef.id);
       setModalVisible(false); // Modal'ı kapat
